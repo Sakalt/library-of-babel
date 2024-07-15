@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library of Babel</title>
+    <script>
+        // アルファベットと追加の文字を含む可能性がある文字列の配列
+        const alphabet = "abcdefghijklmnopqrstuvwxyz";
+        const additionalCharacters = "šħ"; // 追加の文字
+        const characters = alphabet + additionalCharacters;
+
+        // ランダムな32文字の文字列を生成する関数
+        function generateRandomString() {
+            let result = '';
+            const charactersLength = characters.length;
+            for (let i = 0; i < 32; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        // 指定した単語を含む文字列を生成する関数
+        function findStringContaining(word) {
+            let generatedString = '';
+            while (!generatedString.includes(word)) {
+                generatedString = generateRandomString();
+            }
+            return generatedString;
+        }
+
+        // 検索ボタンがクリックされたときの処理
+        function search() {
+            const searchWord = document.getElementById('searchInput').value.trim();
+            if (searchWord === '') {
+                alert('検索する単語を入力してください。');
+                return;
+            }
+
+            const foundString = findStringContaining(searchWord);
+
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `単語「${searchWord}」を含む文字列： ${foundString}`;
+        }
+
+        // 「進む」ボタンがクリックされたときの処理
+        function next() {
+            search();
+        }
+    </script>
+</head>
+<body>
+    <h1>バベルの図書館</h1>
+    <label for="searchInput">検索する単語：</label>
+    <input type="text" id="searchInput">
+    <button onclick="search()">検索</button>
+    <button onclick="next()">進む</button>
+    <div id="result"></div>
+</body>
+</html>
